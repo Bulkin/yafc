@@ -8,5 +8,6 @@
                         :components ((:file "package")
                                      (:file "task-queue")
                                      (:file "history")
-                                     (:file "server"))))
+                                     (:file "server")
+                                     (:file "yafc-server"))))
   :depends-on (:usocket :bordeaux-threads :alexandria))

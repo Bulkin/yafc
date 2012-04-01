@@ -28,6 +28,8 @@
 
 
 (defun check-sockets (sockets func)
+  "Call handler func on ready to be read sockets and return disconnected
+  sockets if any exist"
   (loop for sock in sockets
      when (eq (usocket::state sock) :READ)
      when (not (funcall func (socket-stream sock)))
@@ -50,10 +52,8 @@
                       (delete-if (lambda (x) (find x closed-sockets))
                                  sockets)))))
        else 
-       do (progn
-            (acquire-lock lock)
-            (condition-wait (available-sockets-cond) lock)
-            (release-lock lock)))))
+       do (with-lock-held (lock)
+            (condition-wait (available-sockets-cond) lock)))))
 
 (defun run-worker-threads (thread-count recv-handler)
   (when (> thread-count 0)
