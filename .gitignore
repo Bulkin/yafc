@@ -5,3 +5,5 @@ CMakeFiles
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+*pro.user
+*build*
