@@ -1,0 +1,7 @@
+*.fasl
+*.o
+*yafcd
+CMakeFiles
+CMakeCache.txt
+Makefile
+cmake_install.cmake
