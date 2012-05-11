@@ -18,7 +18,7 @@ void RoomList::send_message(string message, string destination)
 	if (rooms.find(destination) != rooms.end())
 		rooms[destination].send_message(message);
 	else {
-		auto user = rooms[""].find(destination);
+		auto user = rooms[DEF_ROOM].find(destination);
 		if (user)
 			user->send_message(message);
 	}

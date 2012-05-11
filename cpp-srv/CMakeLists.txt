@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 set(Boost_DEBUG 1)
 project (yafcd)
-find_package(Boost REQUIRED system)
+find_package(Boost REQUIRED system regex)
 find_package(Threads)
 link_directories(${Boost_LIBRARY_DIRS})
 
