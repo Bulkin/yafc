@@ -38,7 +38,7 @@ void ChatSession::handle_read(const system::error_code& error,
 		                       { this->handle_read(error, 
 		                                           bytes_transferred); });
 	} else {
-		std::cout << "read error " << retries << error <<std::endl;
+		std::cout << "read error: " << error <<std::endl;
 		this->disconnector();
 	}
 }
@@ -46,7 +46,6 @@ void ChatSession::handle_read(const system::error_code& error,
 ChatSession::ChatSession(asio::io_service& io_service,
                          disconnect_handler disconnector,
                          read_handler reader) : 
-	retries(0),
 	socket(io_service),
 	disconnector(disconnector),
 	reader(reader)
