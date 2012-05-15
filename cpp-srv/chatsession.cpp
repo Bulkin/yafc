@@ -1,5 +1,7 @@
 #include "chatsession.h"
 
+#include <iostream>
+
 using namespace boost;
 using boost::asio::ip::tcp;
 
@@ -16,16 +18,10 @@ void ChatSession::send_message(const string& msg)
 
 void ChatSession::handle_error(const system::error_code& error)
 {
-	if (error)
+	if (error) {
+		std::cout << "write error: " << error << std::endl;
 		this->disconnector();
-	else {
-		// socket.async_read_some(asio::buffer(buf, max_length),
-		//                        [this](const system::error_code& error,
-		//                               size_t bytes_transferred)
-		//                        { this->handle_read(error, 
-		//                                            bytes_transferred); });
-
-	}
+	} 
 }
 
 void ChatSession::handle_read(const system::error_code& error,
@@ -42,6 +38,7 @@ void ChatSession::handle_read(const system::error_code& error,
 		                       { this->handle_read(error, 
 		                                           bytes_transferred); });
 	} else {
+		std::cout << "read error " << retries << error <<std::endl;
 		this->disconnector();
 	}
 }
@@ -49,6 +46,7 @@ void ChatSession::handle_read(const system::error_code& error,
 ChatSession::ChatSession(asio::io_service& io_service,
                          disconnect_handler disconnector,
                          read_handler reader) : 
+	retries(0),
 	socket(io_service),
 	disconnector(disconnector),
 	reader(reader)

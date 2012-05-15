@@ -7,13 +7,13 @@
 #include <boost/asio.hpp>
 
 #include "chatsession.h"
-
-static const char* CMD_PREFIX = "%";
+#include "sendable.h"
 
 static const char* DEF_NAME = "anonymous";
 static const char* DEF_ROOM = "all";
 
-class ChatUser : public std::enable_shared_from_this<ChatUser>
+class ChatUser : public std::enable_shared_from_this<ChatUser>,
+                 public sendable
 {
 
 public:
@@ -34,15 +34,17 @@ public:
 	void disconnect();	
 	state get_status();
 	void start_session();
-	void send_message(const std::string& msg);
+	void send_message(const std::string& msg,
+	                  const std::string& dest);
 
-	void set_name(const std::string& name);
+	bool set_name(const std::string& name);
 	const std::string& get_name();
 
 private:
 
 	ChatSession session;
 	std::string name;
+	std::string target;
 	state status;
 	send_func sender;
 	parse_func parser;
@@ -51,7 +53,7 @@ private:
 
 	std::string gen_msg(const std::string& msg);
 	void read_handler(std::string msg);
-	bool is_cmd(const char* msg);
+	bool validate_name(const std::string& name);
 };
 
 #endif

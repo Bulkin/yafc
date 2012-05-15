@@ -7,9 +7,9 @@ using std::string;
 
 void Server::start_accept()
 {
-	UserList::user_ptr user = rooms.add_user(UserList::user_ptr(
+	auto user = rooms.add_user(std::shared_ptr<ChatUser> (
 	    new ChatUser(io_service,
-		             [this](string message, string destination)
+	                 [this](string message, string destination)
 		{ this->rooms.send_message(message, destination); },
 	                 [this](string message, ChatUser* sender)
 		{ return this->cmdproc.parse(message, sender); })));
@@ -41,6 +41,10 @@ void Server::handle_accept(UserList::user_ptr user,
 void Server::setup_cmdproc()
 {
 	cmdproc.set("name", 
-	            [](ChatUser* sender, CmdProcessor::string_list params)
-	            { sender->set_name(params.back()); });
+	            [this](ChatUser* sender, CmdProcessor::string_list params)
+	            { 
+		            if (this->rooms.find(params.back()))
+			            return false;
+		            return sender->set_name(params.back());
+	            });
 }

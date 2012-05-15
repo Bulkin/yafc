@@ -2,7 +2,7 @@
 
 using namespace std;
 
-UserList::user_ptr& UserList::add(const user_ptr& user)
+UserList::user_ptr UserList::add(user_ptr user)
 {
 	users.push_back(user);
 	return users.back();
@@ -19,18 +19,18 @@ void UserList::cleanup()
 	                { return user->get_status() == ChatUser::DISCONNECTED; });
 }
 
-void UserList::send_message(const string& msg)
+void UserList::send_message(const string& msg, const string& dest)
 {
 	cleanup();
 	for (auto &user : users)
 		if (user->get_status() == ChatUser::CONNECTED)
-			user->send_message(msg);
+			user->send_message(msg, dest);
 }
 
-const UserList::user_ptr& UserList::find(const string& name) const
+const UserList::user_ptr& UserList::find_user(const string& name) const
 {
 	for (auto &user : users)
 		if (user->get_name() == name)
 			return user;
-	return nullptr;
+	return null;
 }

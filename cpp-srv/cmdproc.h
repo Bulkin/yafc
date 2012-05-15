@@ -13,7 +13,7 @@ class CmdProcessor
 {
 public:
 	typedef std::list<std::string> string_list;
-	typedef std::function<void(ChatUser* sender, 
+	typedef std::function<bool(ChatUser* sender, 
 	                           string_list params)> cmd_func;
 	
 	void set(std::string name, cmd_func handler);
