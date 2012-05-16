@@ -1,4 +1,5 @@
 #include <list>
+#include <vector>
 #include <string>
 #include <memory>
 
@@ -17,9 +18,11 @@ public:
 
 	std::shared_ptr<sendable> find(const std::string& name);
 
+	int get_user_names(std::vector<std::string>& res_list);
+
 	void cleanup();
 	size_t count();
 private:
 	std::list<user_ptr> users;
-	const user_ptr null = nullptr;
+	const user_ptr nil = nullptr;
 };

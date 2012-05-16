@@ -32,5 +32,13 @@ const UserList::user_ptr& UserList::find_user(const string& name) const
 	for (auto &user : users)
 		if (user->get_name() == name)
 			return user;
-	return null;
+	return nil;
+}
+
+int UserList::get_user_names(vector<string>& res_list)
+{
+	for (auto &user : users)
+		if (user->get_name() != DEF_NAME)
+			res_list.push_back(user->get_name());
+	return users.size();
 }

@@ -47,4 +47,12 @@ void Server::setup_cmdproc()
 			            return false;
 		            return sender->set_name(params.back());
 	            });
+	cmdproc.set("list-users",
+	            [this](ChatUser* sender, CmdProcessor::string_list params)
+	            {
+		            string room = DEF_ROOM;
+		            if (params.size() > 1)
+			            room = params.back();
+		            return this->rooms.send_user_list(room, sender);
+	            });
 }

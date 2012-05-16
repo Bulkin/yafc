@@ -11,7 +11,6 @@ using namespace boost;
 
 int main()
 {
-	CmdProcessor().test_parser();
 	try  {
 		asio::io_service io_service;
 		Server server(io_service, 48879);
