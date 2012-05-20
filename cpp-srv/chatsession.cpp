@@ -28,7 +28,12 @@ void ChatSession::handle_read(const system::error_code& error,
                               size_t bytes_transferred)
 {
 	if (!error)	{
-		buf[MAX_MSG_LEN] = 0; // make sure we have a c-string
+        int i = 0;
+        for (; i < MAX_MSG_LEN; ++i)
+            if (buf[i] == '\n')
+                break;
+        buf[i] = '\n';
+        buf[i+1] = 0;
 		message = buf; // don't bother with partial messages
 		if ((message[message.size()-1]) != '\n')
 			message.push_back('\n');
