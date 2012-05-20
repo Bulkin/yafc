@@ -28,8 +28,10 @@ void ChatSession::handle_read(const system::error_code& error,
                               size_t bytes_transferred)
 {
 	if (!error)	{
-		buf[bytes_transferred] = 0; // make sure we have a c-string
+		buf[MAX_MSG_LEN] = 0; // make sure we have a c-string
 		message = buf; // don't bother with partial messages
+		if ((message[message.size()-1]) != '\n')
+			message.push_back('\n');
 		reader(message);
 		socket.cancel();
 		socket.async_read_some(asio::buffer(buf, max_length),

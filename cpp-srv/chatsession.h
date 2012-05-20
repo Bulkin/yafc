@@ -6,6 +6,8 @@
 
 #include <boost/asio.hpp>
 
+static const MAX_MSG_LEN 255
+
 class ChatSession
 {
 	enum { max_length = 1023 };
