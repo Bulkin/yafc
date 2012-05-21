@@ -19,7 +19,10 @@ public:
 	void send_message(const std::string& message,
 	                  const std::string& destination);
 	bool send_user_list(const std::string& room, sendable* destination);
-	void send_room_list(sendable* destination);
+	bool send_room_list(sendable* destination);
+
+	bool join(ChatUser* user, const std::string& room);
+	bool leave(ChatUser* user, const std::string& room);
 	
 	std::shared_ptr<sendable> find(const std::string& name);
 

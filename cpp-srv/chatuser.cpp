@@ -79,6 +79,12 @@ bool ChatUser::set_name(const string& name)
 	return true;
 }
 
+bool ChatUser::set_target(const string& dest)
+{
+	target = dest;
+	return true;
+}
+
 tcp::socket& ChatUser::get_socket()
 {
 	return session.get_socket();

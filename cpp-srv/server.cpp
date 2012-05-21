@@ -47,6 +47,7 @@ void Server::setup_cmdproc()
 			            return false;
 		            return sender->set_name(params.back());
 	            });
+
 	cmdproc.set("list-users",
 	            [this](ChatUser* sender, CmdProcessor::string_list params)
 	            {
@@ -54,5 +55,37 @@ void Server::setup_cmdproc()
 		            if (params.size() > 1)
 			            room = params.back();
 		            return this->rooms.send_user_list(room, sender);
+	            });
+
+	cmdproc.set("list-rooms",
+	            [this](ChatUser* sender, CmdProcessor::string_list params)
+	            {
+		            return this->rooms.send_room_list(sender);
+	            });
+
+	cmdproc.set("join",
+	            [this](ChatUser* sender, CmdProcessor::string_list params)
+	            {
+		            if (params.size() < 1)
+			            return false;
+		            if (this->rooms.join(sender, params.back()))
+			            sender->set_target(params.back());
+		            else
+			            return false;
+		            return true;
+	            });
+
+	cmdproc.set("to",
+	            [this](ChatUser* sender, CmdProcessor::string_list params)
+	            {
+		            if (params.size() < 1)
+			            return false;
+		            std::shared_ptr<sendable> dest = 
+			            this->rooms.find(params.back());
+		            if (dest)
+			            sender->set_target(params.back());
+		            else
+			            return false;
+		            return true;
 	            });
 }

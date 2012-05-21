@@ -61,6 +61,31 @@ bool RoomList::send_user_list(const string& room, sendable* destination)
 	return true;
 }
 
+bool RoomList::send_room_list(sendable* destination)
+{
+	vector<string> room_names;
+	for (auto room : rooms) 
+		room_names.push_back(room.first);
+	int count = room_names.size();
+
+	string msg = "%room-list ";
+
+	destination->send_message(msg + to_string(count) + "\n", "");
+	
+	send_str_list(msg, NAMES_PER_LINE, room_names, destination);
+
+	return true;
+}
+
+bool RoomList::join(ChatUser* user, const string& room)
+{
+	if (!rooms[DEF_ROOM]->find_user(room) &&
+	    add_user(user->shared_from_this(), room))
+		return true;
+	else
+		return false;
+}
+
 shared_ptr<sendable> RoomList::find(const std::string& name)
 {
 	for (auto room : rooms)

@@ -4,6 +4,9 @@ using namespace std;
 
 UserList::user_ptr UserList::add(user_ptr user)
 {
+	for (auto u : users)
+		if (u == user)
+			return nil;
 	users.push_back(user);
 	return users.back();
 }

@@ -38,6 +38,7 @@ public:
 	                  const std::string& dest);
 
 	bool set_name(const std::string& name);
+	bool set_target(const std::string& dest);
 	const std::string& get_name();
 
 private:
