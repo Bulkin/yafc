@@ -11,6 +11,7 @@ void ChatSession::sendMessage(QString Message)
 {
     QTextStream text(&Socket);
     text<<Message;
+
 }
 void ChatSession::SocketReadyRead()
 {

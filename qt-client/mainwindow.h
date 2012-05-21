@@ -31,11 +31,13 @@ private slots:
     void on_ButtonSend_clicked();
     void on_lineEditTextSend_returnPressed();
     void printMessage(QString Message);
+    void updateListUser();
 public slots:
 
 
 private:
     Ui::MainWindow *ui;
+    QTimer *timer ;
     ChatSession _ChatSession;
 
 };
